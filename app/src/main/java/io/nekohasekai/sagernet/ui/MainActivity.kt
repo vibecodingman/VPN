@@ -60,6 +60,20 @@ class MainActivity : ThemedActivity(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+                // Автоматическое добавление базы бесплатных серверов при первом запуске
+        val vpnPref = getSharedPreferences("vibe_vpn_settings", MODE_PRIVATE)
+        if (vpnPref.getBoolean("is_first_launch", true)) {
+            try {
+                val defaultSubUrl = "https://githubusercontent.com"
+                val intent = android.content.Intent(android.content.Intent.ACTION_VIEW, android.net.Uri.parse(defaultSubUrl)).apply {
+                    setPackage(packageName)
+                }
+                startActivity(intent)
+                vpnPref.edit().putBoolean("is_first_launch", false).apply()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
 
         binding = LayoutMainBinding.inflate(layoutInflater)
         binding.fab.initProgress(binding.fabProgress)
