@@ -60,18 +60,22 @@ class MainActivity : ThemedActivity(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-                // Автоматическое добавление базы бесплатных серверов при первом запуске
-        val vpnPref = getSharedPreferences("vibe_vpn_settings", MODE_PRIVATE)
-        if (vpnPref.getBoolean("is_first_launch", true)) {
-            try {
-                val defaultSubUrl = "https://githubusercontent.com"
-                val intent = android.content.Intent(android.content.Intent.ACTION_VIEW, android.net.Uri.parse(defaultSubUrl)).apply {
-                    setPackage(packageName)
+                        // Автоматический импорт серверов Liberty VPN при первом запуске
+        val vibePrefs = this.getSharedPreferences("vibe_vpn_settings", android.content.Context.MODE_PRIVATE)
+        if (vibePrefs.getBoolean("is_first_launch", true)) {
+            val defaultSubUrl = "https://githubusercontent.com"
+            window.decorView.post {
+                try {
+                    val intent = android.content.Intent(android.content.Intent.ACTION_VIEW).apply {
+                        setData(android.net.Uri.parse(defaultSubUrl))
+                        setPackage(packageName)
+                        addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK)
+                    }
+                    applicationContext.startActivity(intent)
+                    vibePrefs.edit().putBoolean("is_first_launch", false).apply()
+                } catch (e: java.lang.Exception) {
+                    e.printStackTrace()
                 }
-                startActivity(intent)
-                vpnPref.edit().putBoolean("is_first_launch", false).apply()
-            } catch (e: Exception) {
-                e.printStackTrace()
             }
         }
 
