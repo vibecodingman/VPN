@@ -4,8 +4,6 @@ workflows:
     max_build_duration: 30
     instance_type: mac_mini_m1
     environment:
-      groups:
-        - keystore_credentials
       vars:
         PACKAGE_NAME: "io.nekohasekai.sagerenet"
       java: 17
@@ -22,6 +20,3 @@ workflows:
       email:
         recipients:
           - timalajf012@gmail.com
-        notified:
-          on_success: true
-          on_failure: true
