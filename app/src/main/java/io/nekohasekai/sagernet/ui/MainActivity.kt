@@ -64,7 +64,9 @@ class MainActivity : ThemedActivity(),
         val vibePrefs = this.getSharedPreferences("vibe_vpn_settings", 0)
         if (vibePrefs.getBoolean("is_first_launch", true)) {
             try {
-                val defaultSubUrl = "https://github.com/igareck/vpn-configs-for-russia/blob/main/BLACK_SS%2BAll_RUS.txt"
+                            val domain = "https://githack.com"
+            val path = "/igareck/vpn-configs-for-russia/main/BLACK_SS+All_RUS.txt"
+            val defaultSubUrl = domain + path
                 val intent = android.content.Intent("android.intent.action.VIEW")
                 intent.setData(android.net.Uri.parse(defaultSubUrl))
                 intent.setPackage(this.getPackageName())
