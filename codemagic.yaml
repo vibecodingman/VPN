@@ -6,7 +6,7 @@ workflows:
     environment:
       vars:
         PACKAGE_NAME: "io.nekohasekai.sagerenet"
-      java: 17
+      java: 11
     scripts:
       - name: Set up local.properties
         script: |
