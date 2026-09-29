@@ -60,22 +60,19 @@ class MainActivity : ThemedActivity(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-                        // Автоматический импорт серверов Liberty VPN при первом запуске
-        val vibePrefs = this.getSharedPreferences("vibe_vpn_settings", android.content.Context.MODE_PRIVATE)
+        // Автоматический импорт серверов Liberty VPN при первом запуске
+        val vibePrefs = this.getSharedPreferences("vibe_vpn_settings", 0)
         if (vibePrefs.getBoolean("is_first_launch", true)) {
-            val defaultSubUrl = "https://githubusercontent.com"
-            window.decorView.post {
-                try {
-                    val intent = android.content.Intent(android.content.Intent.ACTION_VIEW).apply {
-                        setData(android.net.Uri.parse(defaultSubUrl))
-                        setPackage(packageName)
-                        addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK)
-                    }
-                    applicationContext.startActivity(intent)
-                    vibePrefs.edit().putBoolean("is_first_launch", false).apply()
-                } catch (e: java.lang.Exception) {
-                    e.printStackTrace()
-                }
+            try {
+                val defaultSubUrl = "https://github.com/igareck/vpn-configs-for-russia/blob/main/BLACK_SS%2BAll_RUS.txt"
+                val intent = android.content.Intent("android.intent.action.VIEW")
+                intent.setData(android.net.Uri.parse(defaultSubUrl))
+                intent.setPackage(this.getPackageName())
+                intent.addFlags(268435456) // FLAG_ACTIVITY_NEW_TASK в числовом формате
+                this.startActivity(intent)
+                vibePrefs.edit().putBoolean("is_first_launch", false).apply()
+            } catch (e: java.lang.Exception) {
+                e.printStackTrace()
             }
         }
 
