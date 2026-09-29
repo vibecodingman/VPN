@@ -5,15 +5,15 @@ workflows:
     instance_type: mac_mini_m1
     environment:
       vars:
-        PACKAGE_NAME: "io.nekohasekai.sagerenet"
-      java: 11
+        PACKAGE_NAME: "moe.matsuri.nb4a"
+      java: 17
     scripts:
       - name: Set up local.properties
         script: |
           echo "sdk.dir=$ANDROID_SDK_ROOT" > local.properties
       - name: Build Android APK
         script: |
-          ./gradlew :app:assembleOssDebug
+          ./gradlew :app:assembleFdroidRelease
     artifacts:
       - app/build/outputs/apk/**/*.apk
     publishing:
